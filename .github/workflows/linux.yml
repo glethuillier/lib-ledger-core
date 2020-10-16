@@ -150,8 +150,8 @@ jobs:
           name: Linux_coverage_report
           path: |
             ${{env.build_path}}/lcov_html_report
-      #- 
-      #  name: Clean workspace
-      #  if: ${{ always() }}
-      #  run: |
-      #    rm -rf "${{ github.workspace }}/${{env.build_path}}"
+      - 
+        name: Clean workspace
+        if: ${{ always() }}
+        run: |
+          rm -rf "${{ github.workspace }}/${{env.build_path}}"
