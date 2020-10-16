@@ -118,7 +118,7 @@ jobs:
       - 
         name: Run Unit Tests
         run: |
-          ctest --timeout 240 -VV
+          ctest --timeout 60 -VV
         continue-on-error: true
         working-directory: ${{env.build_path}}
       -
