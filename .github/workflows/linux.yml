@@ -144,10 +144,9 @@ jobs:
       - 
         name: Generate coverage report
         run: |
-          genhtml \
+          genhtml --ignore-errors \
             source lcov.info \
             --title "Libcore: Unit Test Coverage (Linux, Debug)" \
-            --ignore-errors \
             --frames \
             --html-gzip \
             --show-details \
