@@ -60,13 +60,18 @@ jobs:
           make -j$(sysctl -n hw.ncpu)
         working-directory: ${{env.build_path}}
       - 
+        name: Compress release build files
+        run: |
+          tar cvf - core/src/libledger-core-static.a core/src/libledger-core.dylib \
+          | gzip -9 - > release_build_files.tar.gz
+        working-directory: ${{env.build_path}}
+      - 
         name : Upload release build files
         uses: actions/upload-artifact@v2
         with:
           name: macOS_release_build_files
           path: |
-            ${{env.build_path}}/core/src/libledger-core-static.a
-            ${{env.build_path}}/core/src/libledger-core.dylib
+            ${{env.build_path}}/release_build_files.tar.gz
       - 
         name: Clean workspace
         if: ${{ always() }}
@@ -108,13 +113,18 @@ jobs:
           make -j$(sysctl -n hw.ncpu)
         working-directory: ${{env.build_path}}
       - 
+        name: Compress debug build files
+        run: |
+          tar cvf - core/src/libledger-core-static.a core/src/libledger-core.dylib \
+          | gzip -9 - > debug_build_files.tar.gz
+        working-directory: ${{env.build_path}}
+      - 
         name : Upload debug build files
         uses: actions/upload-artifact@v2
         with:
           name: macOS_debug_build_files
           path: |
-            ${{env.build_path}}/core/src/libledger-core-static.a
-            ${{env.build_path}}/core/src/libledger-core.dylib
+            ${{env.build_path}}/debug_build_files.tar.gz
       - 
         name: Run Unit Tests
         run: |
@@ -148,7 +158,6 @@ jobs:
             source lcov.info \
             --title "Libcore: Unit Test Coverage (macOS, Debug)" \
             --frames \
-            --html-gzip \
             --show-details \
             --keep-descriptions \
             --function-coverage \
@@ -156,12 +165,17 @@ jobs:
             --output-directory=lcov_html_report
         working-directory: ${{env.build_path}}
       - 
+        name: Compress coverage report
+        run: |
+          tar cvf - lcov_html_report | gzip -9 - > lcov_html_report.tar.gz
+        working-directory: ${{env.build_path}}
+      - 
         name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
           name: macOS_coverage_report
           path: |
-            ${{env.build_path}}/lcov_html_report
+            ${{env.build_path}}/lcov_html_report.tar.gz
       - 
         name: Clean workspace
         if: ${{ always() }}
