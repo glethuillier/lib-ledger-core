@@ -144,12 +144,16 @@ jobs:
       - 
         name: Generate coverage report
         run: |
-          genhtml --ignore-errors \
+          genhtml \
             source lcov.info \
             --title "Libcore: Unit Test Coverage (Linux, Debug)" \
+            --ignore-errors \
             --frames \
+            --html-gzip \
             --show-details \
             --keep-descriptions \
+            --function-coverage \
+            --branch-coverage \
             --output-directory=lcov_html_report
         working-directory: ${{env.build_path}}
       - 
