@@ -135,9 +135,8 @@ jobs:
         name: Generate coverage
         run: |
           lcov \
-            -q \
-            --directory core/src/ \
-            --base-directory ../${{env.source_path}}/core/src/ \
+            --directory core/src \
+            --base-directory ../${{env.source_path}}/core/src \
             --no-external \
             --capture \
             --rc lcov_branch_coverage=1 \
@@ -160,6 +159,7 @@ jobs:
             --frames \
             --show-details \
             --keep-descriptions \
+            --demangle-cpp \
             --function-coverage \
             --branch-coverage \
             --output-directory=macOS_coverage_report
