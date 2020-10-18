@@ -162,12 +162,12 @@ jobs:
             --keep-descriptions \
             --function-coverage \
             --branch-coverage \
-            --output-directory=lcov_html_report
+            --output-directory=macOS_coverage_report
         working-directory: ${{env.build_path}}
       - 
         name: Compress coverage report
         run: |
-          tar cvf - lcov_html_report | gzip -9 - > lcov_html_report.tar.gz
+          tar cvf - macOS_coverage_report | gzip -9 - > macOS_coverage_report.tar.gz
         working-directory: ${{env.build_path}}
       - 
         name: Upload coverage report
@@ -175,7 +175,7 @@ jobs:
         with:
           name: macOS_coverage_report
           path: |
-            ${{env.build_path}}/lcov_html_report.tar.gz
+            ${{env.build_path}}/macOS_coverage_report.tar.gz
       - 
         name: Clean workspace
         if: ${{ always() }}
