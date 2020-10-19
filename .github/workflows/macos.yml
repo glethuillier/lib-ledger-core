@@ -24,7 +24,7 @@ jobs:
             lcov --version
             genhtml --version
             openssl version
-            if [! -d "${{env.open_ssl_path}}" ]
+            if [ ! -d "${{env.open_ssl_path}}" ]
             then 
               exit 1
             fi
