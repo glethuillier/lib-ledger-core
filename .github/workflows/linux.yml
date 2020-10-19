@@ -8,7 +8,6 @@ on:
 env:
     source_path: 'libcore_source'
     build_path: 'libcore_build'
-    open_ssl_path: '/usr/lib/x86_64-linux-gnu/'
 
 jobs:
 
@@ -52,7 +51,6 @@ jobs:
               -DBUILD_TESTS=OFF \
               -DSYS_OPENSSL=ON \
               -DOPENSSL_USE_STATIC_LIBS=TRUE \
-              -DOPENSSL_ROOT_DIR=${{env.open_ssl_path}} \
               ../${{env.source_path}}
       - 
         name: Build - Make
@@ -99,8 +97,6 @@ jobs:
             -DCMAKE_BUILD_TYPE=Debug \
             -DBUILD_TESTS=ON \
             -DSYS_OPENSSL=ON \
-            -DOPENSSL_SSL_LIBRARIES=${{env.open_ssl_path}} \
-            -DOPENSSL_INCLUDE_DIR=${{env.open_ssl_path}} \
             ../${{env.source_path}}
       - 
         name: Build - Make
