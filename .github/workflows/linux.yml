@@ -59,19 +59,20 @@ jobs:
         run: |
           make -j$(nproc)
         working-directory: ${{env.build_path}}
-      - 
-        name: Compress release build files
-        run: |
-          tar cvf - libledger-core-static.a libledger-core.so \
-          | gzip -9 - > release_build_files.tar.gz
-        working-directory: ${{env.build_path}}/core/src/
+      #- 
+      #  name: Compress release build files
+      #  run: |
+      #    tar cvf - libledger-core-static.a libledger-core.so \
+      #    | gzip -9 - > release_build_files.tar.gz
+      #  working-directory: ${{env.build_path}}/core/src/
       - 
         name : Upload release build files
         uses: actions/upload-artifact@v2
         with:
           name: Linux_release_build_files
           path: |
-            ${{env.build_path}}/core/src/release_build_files.tar.gz
+            ${{env.build_path}}/core/src/libledger-core-static.a
+            ${{env.build_path}}/core/src/libledger-core.so
       - 
         name: Clean workspace
         if: ${{ always() }}
@@ -112,19 +113,20 @@ jobs:
         run: |
           make -j$(nproc)
         working-directory: ${{env.build_path}}
-      - 
-        name: Compress debug build files
-        run: |
-          tar cvf - libledger-core-static.a libledger-core.o \
-          | gzip -9 - > debug_build_files.tar.gz
-        working-directory: ${{env.build_path}}/core/src
+      #- 
+      #  name: Compress debug build files
+      #  run: |
+      #    tar cvf - libledger-core-static.a libledger-core.o \
+      #    | gzip -9 - > debug_build_files.tar.gz
+      #  working-directory: ${{env.build_path}}/core/src
       - 
         name : Upload debug build files
         uses: actions/upload-artifact@v2
         with:
           name: Linux_debug_build_files
           path: |
-            ${{env.build_path}}/core/src/debug_build_files.tar.gz
+            ${{env.build_path}}/core/src/libledger-core-static.a
+            ${{env.build_path}}/core/src/libledger-core.o
       - 
         name: Run Unit Tests
         run: |
