@@ -8,6 +8,7 @@ on:
 env:
     source_path: 'libcore_source'
     build_path: 'libcore_build'
+    open_ssl_path: '/usr/local/opt/openssl@1.1/'
 
 jobs:
 
@@ -23,6 +24,10 @@ jobs:
             lcov --version
             genhtml --version
             openssl version
+            if [! -d "${{env.open_ssl_path}}" ]
+            then 
+              exit 1
+            fi
 
   ###########
   # RELEASE #
@@ -51,6 +56,7 @@ jobs:
             -DBUILD_TESTS=OFF \
             -DSYS_OPENSSL=ON \
             -DOPENSSL_USE_STATIC_LIBS=TRUE \
+            -DOPENSSL_ROOT_DIR=${{env.open_ssl_path}} \
             ../${{env.source_path}}
       - 
         name: Build - Make
@@ -98,6 +104,7 @@ jobs:
             -DBUILD_TESTS=ON \
             -DSYS_OPENSSL=ON \
             -DOPENSSL_USE_STATIC_LIBS=TRUE \
+            -DOPENSSL_ROOT_DIR=${{env.open_ssl_path}} \
             ../${{env.source_path}}
       - 
         name: Build - Make
